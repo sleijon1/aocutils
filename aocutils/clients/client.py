@@ -25,7 +25,7 @@ def fetch(year=None, day=None):
     credentials = read_credentials()
     url = f'https://adventofcode.com/{year}/day/{day}/input'
 
-    input_path = f"{os.getcwd()}/day{day}/inputs.txt"
+    input_path = f"{os.getcwd()}/day{day}/input.txt"
     if os.path.exists(input_path):
         print(f"{input_path} exists. Exiting.")
         return
