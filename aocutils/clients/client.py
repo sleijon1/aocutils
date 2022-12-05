@@ -59,12 +59,3 @@ def submit(answer, year=None, day=None, level=1):
         message = colored(response, "red")
     print(message)
     return response
-
-
-def prepare_directories():
-    # prepare directories
-    # paste in aocutils import + fetch
-    # add timer to fetch so that it fetches
-    # on the second of 6.00 if clock is 
-    # before it
-    pass
