@@ -16,8 +16,12 @@ def read_credentials():
     return credentials
 
 def get_current_day():
-    dt = datetime.datetime.now()
-    return dt.year, dt.day
+    dt = datetime.datetime.now(tz=datetime.timezone.utc)
+    if 0 < dt.hour < 5:
+        day = dt.day-1
+    else:
+        day = dt.day
+    return dt.year, day
 
 def fetch(year=None, day=None):
     if not year or not day:
@@ -38,14 +42,16 @@ def fetch(year=None, day=None):
 def find_main_info(text):
     try:
         soup = BeautifulSoup(text, 'html.parser')
-        soup = soup.main.p
-        soup.a.decompose()
+        for data in (soup(['style', 'script'])):
+            data.decompose()
+        return soup.get_text()
     except Exception:
-        print(colored("Couldn't parse out main tag", "red"))
+        print(colored("Could not parse answer. Go to www.adventofcode.com to check if you got it right.", "red"))
+        print(text)
         return
     return soup.get_text()
 
-def submit(answer, year=None, day=None, level=1):    
+def submit(answer, year=None, day=None, level=1):
     if not year or not day:
         year, day = get_current_day()
     credentials = read_credentials()
